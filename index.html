@@ -5,51 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mazen Moazzam | SWE</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            secondary: '#1e40af',
+            accent: '#3b82f6',
+            dark: '#1e293b',
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gradient-to-br from-white to-gray-100 text-black font-sans">
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 text-gray-800 font-sans">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md p-4 flex justify-between items-center px-10">
-    <h1 class="text-xl font-bold">Mazen Moazzam</h1>
-    <div>
-      <a href="#projects" class="text-gray-700 hover:text-black transition">Projects</a>
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center px-10 sticky top-0 z-50">
+    <h1 class="text-xl font-bold text-primary">Mazen Moazzam</h1>
+    <div class="flex space-x-6">
+      <a href="#projects" class="text-gray-700 hover:text-primary transition font-medium">Projects</a>
+      <a href="#experience" class="text-gray-700 hover:text-primary transition font-medium">Experience</a>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="text-center p-12">
-    <h1 class="text-5xl font-extrabold mb-4">Hi, I'm Mazen Moazzam 👋</h1>
-    <p class="text-xl text-gray-700">Software Engineer Co-op @ Comcast</p>
+  <section class="text-center p-12 md:p-20">
+    <h1 class="text-5xl font-extrabold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Hi, I'm Mazen Moazzam 👋</h1>
+    <p class="text-xl text-gray-600">Software Engineer Co-op @ Comcast</p>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="p-6 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-semibold mb-8 text-center text-dark">💼 Experience</h2>
+
+    <div class="space-y-8">
+      <!-- Experience 1 -->
+      <div class="border p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="text-2xl font-bold text-primary">Software Engineer</h3>
+          <span class="text-gray-600">March 2025 – Present</span>
+        </div>
+        <p class="text-lg font-medium text-gray-700 mb-4">Comcast Corporation • Philadelphia, PA</p>
+        <ul class="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Video IP Engineering and Research team.</li>
+        </ul>
+      </div>
+
+      <!-- Experience 2 -->
+      <div class="border p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="text-2xl font-bold text-primary">Course Assistant</h3>
+          <span class="text-gray-600">May 2024 – Present</span>
+        </div>
+        <p class="text-lg font-medium text-gray-700 mb-4">College of Computing and Informatics • Philadelphia, PA</p>
+        <ul class="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Conduct weekly office hours for CS 172 (Object-Oriented Programming) and SE 210 (Software Specification and Design), assisting over 70 students in mastering complex material and driving improvements in class performance.</li>
+          <li>Lead lab sessions for 50+ students, providing hands-on guidance to reinforce core OOP concepts and principles, resulting in student's enhanced proficiency and confidence in applying knowledge to practical assignments.</li>
+          <li>Grade 60+ assignments with meticulous attention to detail, ensuring compliance with rigorous course standards and promoting high academic achievement among students.</li>
+        </ul>
+      </div>
+
+      <!-- Experience 3 -->
+      <div class="border p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="text-2xl font-bold text-primary">Software Engineer</h3>
+          <span class="text-gray-600">June 2023 – August 2023</span>
+        </div>
+        <p class="text-lg font-medium text-gray-700 mb-4">RadicalAI • Remote</p>
+        <ul class="list-disc pl-5 space-y-2 text-gray-700">
+          <li>Designed a company-wide data schema to support Stripe API integration with a lightweight backend in Firebase, utilizing Firebase cloud functions, Firestore, and Firebase Local Emulator.</li>
+          <li>Spearheaded the development of the company's monetization platform, integrating a secure and efficient subscription system that increased company revenue by $6,000.</li>
+          <li>Developed an interactive arcade system in Node.js, creating engaging assessments and activities that increased user activity by 2 hours per session.</li>
+          <li>Assisted a team of 7 developers to ensure timely completion of tasks, facilitating a smooth transition and presentation of accomplished work before weekly sprint reviews.</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
   <!-- Projects Section -->
   <section id="projects" class="p-6 max-w-4xl mx-auto">
-    <h2 class="text-3xl font-semibold mb-8 text-center">🚀 Projects</h2>
+    <h2 class="text-3xl font-semibold mb-8 text-center text-dark">🚀 Projects</h2>
 
     <div class="grid gap-6 md:grid-cols-2">
       <!-- Project Card -->
-      <div class="border p-6 rounded-lg shadow hover:shadow-2xl bg-white transition-transform transform hover:scale-105">
-        <h3 class="text-2xl font-bold mb-2">🛡️ AlertVision</h3>
+      <div class="border p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-transform transform hover:scale-[1.02]">
+        <h3 class="text-2xl font-bold mb-2 text-primary">🛡️ AlertVision</h3>
         <p class="text-gray-700">Real-time surveillance app using Flask, React, and OpenCV.</p>
       </div>
 
-      <div class="border p-6 rounded-lg shadow hover:shadow-2xl bg-white transition-transform transform hover:scale-105">
-        <h3 class="text-2xl font-bold mb-2">📈 TradeWizard</h3>
+      <div class="border p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-transform transform hover:scale-[1.02]">
+        <h3 class="text-2xl font-bold mb-2 text-primary">📈 TradeWizard</h3>
         <p class="text-gray-700">Automated stock paper trading bot with sentiment analysis.</p>
       </div>
 
-      <div class="border p-6 rounded-lg shadow hover:shadow-2xl bg-white transition-transform transform hover:scale-105">
-        <h3 class="text-2xl font-bold mb-2">🃏 PokeScan</h3>
+      <div class="border p-6 rounded-lg shadow-lg bg-white hover:shadow-xl transition-transform transform hover:scale-[1.02]">
+        <h3 class="text-2xl font-bold mb-2 text-primary">🃏 PokeScan</h3>
         <p class="text-gray-700">CNN-based Pokémon card authenticity detector.</p>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center text-gray-500 p-6 mt-12">
-    © 2025 Mazen Moazzam • <a href="https://github.com/mazenMoazzam" class="text-blue-500 hover:underline">GitHub</a> • <a href="https://www.linkedin.com/in/mazen-moazzam-7ab28626a/" class="text-blue-500 hover:underline">LinkedIn</a>
+  <footer class="text-center text-gray-500 p-6 mt-12 bg-white">
+    © 2025 Mazen Moazzam • <a href="https://github.com/mazenMoazzam" class="text-primary hover:underline">GitHub</a> • <a href="https://www.linkedin.com/in/mazen-moazzam-7ab28626a/" class="text-primary hover:underline">LinkedIn</a>
   </footer>
 
 </body>
 </html>
-
