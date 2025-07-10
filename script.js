@@ -102,6 +102,184 @@ particlesJS('particles-js', {
   retina_detect: true
 });
 
+// Contact Form Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contactForm');
+  
+  if (contactForm) {
+    contactForm.addEventListener('submit', handleFormSubmit);
+    
+    // Real-time validation
+    const inputs = contactForm.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('blur', validateField);
+      input.addEventListener('input', clearFieldError);
+    });
+  }
+});
+
+function validateField(e) {
+  const field = e.target;
+  const value = field.value.trim();
+  
+  // Remove existing error/success classes
+  field.classList.remove('error', 'success');
+  
+  // Validate based on field type
+  switch(field.type) {
+    case 'email':
+      if (!validateEmail(value)) {
+        field.classList.add('error');
+        showFieldError(field, 'Please enter a valid email address');
+      } else {
+        field.classList.add('success');
+      }
+      break;
+    case 'text':
+      if (value.length < 2) {
+        field.classList.add('error');
+        showFieldError(field, 'This field is required');
+      } else {
+        field.classList.add('success');
+      }
+      break;
+  }
+  
+  // Special validation for textarea
+  if (field.tagName === 'TEXTAREA') {
+    if (value.length < 10) {
+      field.classList.add('error');
+      showFieldError(field, 'Message must be at least 10 characters long');
+    } else {
+      field.classList.add('success');
+    }
+  }
+}
+
+function clearFieldError(e) {
+  const field = e.target;
+  field.classList.remove('error');
+  
+  // Remove error message if exists
+  const errorMsg = field.parentNode.querySelector('.field-error');
+  if (errorMsg) {
+    errorMsg.remove();
+  }
+}
+
+function showFieldError(field, message) {
+  // Remove existing error message
+  const existingError = field.parentNode.querySelector('.field-error');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  // Create new error message
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'field-error text-red-400 text-sm mt-1';
+  errorDiv.textContent = message;
+  field.parentNode.appendChild(errorDiv);
+}
+
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const submitBtn = form.querySelector('.submit-btn');
+  const formData = new FormData(form);
+  
+  // Validate all fields
+  const inputs = form.querySelectorAll('input, textarea');
+  let isValid = true;
+  
+  inputs.forEach(input => {
+    validateField({ target: input });
+    if (input.classList.contains('error')) {
+      isValid = false;
+    }
+  });
+  
+  if (!isValid) {
+    showFormMessage('Please fix the errors above', 'error');
+    return;
+  }
+  
+  // Disable submit button and show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+  
+  try {
+    // Prepare email data
+    const emailData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+      to: 'maz.moazzam345@gmail.com'
+    };
+    
+    // Send email using EmailJS (you'll need to set this up)
+    // For now, we'll simulate sending and show success message
+    await simulateEmailSend(emailData);
+    
+    // Show success message
+    showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+    
+    // Reset form
+    form.reset();
+    inputs.forEach(input => {
+      input.classList.remove('success');
+    });
+    
+  } catch (error) {
+    console.error('Error sending email:', error);
+    showFormMessage('Failed to send message. Please try again or email me directly.', 'error');
+  } finally {
+    // Re-enable submit button
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Message';
+  }
+}
+
+function simulateEmailSend(emailData) {
+  return new Promise((resolve) => {
+    // Simulate API call delay
+    setTimeout(() => {
+      console.log('Email data:', emailData);
+      resolve();
+    }, 2000);
+  });
+}
+
+function showFormMessage(message, type) {
+  // Remove existing messages
+  const existingMessage = document.querySelector('.form-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  
+  // Create new message
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `form-message ${type}`;
+  messageDiv.textContent = message;
+  
+  // Insert after form
+  const form = document.getElementById('contactForm');
+  form.parentNode.insertBefore(messageDiv, form.nextSibling);
+  
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    if (messageDiv.parentNode) {
+      messageDiv.remove();
+    }
+  }, 5000);
+}
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
@@ -228,12 +406,6 @@ document.querySelectorAll('.social-link').forEach(link => {
   });
 });
 
-// Contact form validation (if you add a form later)
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-}
-
 // Loading animation
 window.addEventListener('load', () => {
   document.body.classList.add('loaded');
@@ -297,6 +469,10 @@ style.textContent = `
   .loaded {
     animation: fadeIn 1s ease-out;
   }
+  
+  .field-error {
+    animation: shake 0.5s ease-in-out;
+  }
 `;
 document.head.appendChild(style);
 
@@ -323,6 +499,7 @@ revealOnScroll();
 console.log('%c🚀 Welcome to Mazen\'s Portfolio!', 'color: #00d4ff; font-size: 20px; font-weight: bold;');
 console.log('%c💡 Built with modern web technologies', 'color: #7c3aed; font-size: 14px;');
 console.log('%c🌟 Feel free to explore the code!', 'color: #f59e0b; font-size: 14px;');
+console.log('%c📧 Contact: maz.moazzam345@gmail.com', 'color: #00d4ff; font-size: 14px;');
 
 // Performance optimization: Throttle scroll events
 function throttle(func, limit) {

@@ -303,13 +303,74 @@
         <div class="contact-card">
           <i class="fas fa-envelope text-4xl text-primary mb-4"></i>
           <h3 class="text-xl font-semibold mb-2">Email</h3>
-          <p class="text-gray-300">mazen.moazzam@example.com</p>
+          <p class="text-gray-300">maz.moazzam345@gmail.com</p>
         </div>
         
         <div class="contact-card">
           <i class="fas fa-map-marker-alt text-4xl text-primary mb-4"></i>
           <h3 class="text-xl font-semibold mb-2">Location</h3>
           <p class="text-gray-300">Philadelphia, PA</p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="max-w-2xl mx-auto mb-12">
+        <div class="contact-form-card">
+          <h3 class="text-2xl font-bold mb-6 text-center text-primary">Send me a message</h3>
+          <form id="contactForm" class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required 
+                  class="form-input"
+                  placeholder="Your name"
+                >
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  class="form-input"
+                  placeholder="your.email@example.com"
+                >
+              </div>
+            </div>
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+              <input 
+                type="text" 
+                id="subject" 
+                name="subject" 
+                required 
+                class="form-input"
+                placeholder="What's this about?"
+              >
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="5" 
+                required 
+                class="form-textarea"
+                placeholder="Tell me about your project or just say hello!"
+              ></textarea>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane mr-2"></i>
+                Send Message
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       
@@ -330,7 +391,7 @@
   <!-- Footer -->
   <footer class="text-center py-8 border-t border-glassBorder bg-glass/50 backdrop-blur-md">
     <p class="text-gray-400">
-      © 2025 Mazen Moazzam • Built with ❤️ and lots of ☕
+      © 2025 Mazen Moazzam
     </p>
   </footer>
 
