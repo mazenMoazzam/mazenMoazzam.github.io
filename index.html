@@ -292,98 +292,100 @@
 
   <!-- Contact Section -->
   <section id="contact" class="py-20 relative z-10">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-5xl font-bold mb-16">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-5xl font-bold mb-16 text-center">
         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
           Let's Connect
         </span>
       </h2>
       
-      <div class="grid md:grid-cols-2 gap-8 mb-12">
-        <div class="contact-card">
-          <i class="fas fa-envelope text-4xl text-primary mb-4"></i>
-          <h3 class="text-xl font-semibold mb-2">Email</h3>
-          <p class="text-gray-300">maz.moazzam345@gmail.com</p>
+      <!-- Unified Contact Component -->
+      <div class="unified-contact-card">
+        <div class="contact-header">
+          <div class="contact-info">
+            <div class="info-item">
+              <i class="fas fa-envelope text-primary"></i>
+              <span>maz.moazzam345@gmail.com</span>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt text-primary"></i>
+              <span>Philadelphia, PA</span>
+            </div>
+          </div>
         </div>
         
-        <div class="contact-card">
-          <i class="fas fa-map-marker-alt text-4xl text-primary mb-4"></i>
-          <h3 class="text-xl font-semibold mb-2">Location</h3>
-          <p class="text-gray-300">Philadelphia, PA</p>
-        </div>
-      </div>
-
-      <!-- Contact Form -->
-      <div class="max-w-2xl mx-auto mb-12">
-        <div class="contact-form-card">
-          <h3 class="text-2xl font-bold mb-6 text-center text-primary">Send me a message</h3>
-          <form id="contactForm" class="space-y-6">
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+        <div class="contact-form-section">
+          <h3 class="form-title">Send me a message</h3>
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
                 <input 
                   type="text" 
                   id="name" 
                   name="name" 
                   required 
-                  class="form-input"
+                  class="modern-input"
                   placeholder="Your name"
                 >
+                <label for="name" class="input-label">Name</label>
               </div>
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <div class="form-group">
                 <input 
                   type="email" 
                   id="email" 
                   name="email" 
                   required 
-                  class="form-input"
+                  class="modern-input"
                   placeholder="your.email@example.com"
                 >
+                <label for="email" class="input-label">Email</label>
               </div>
             </div>
-            <div>
-              <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+            
+            <div class="form-group">
               <input 
                 type="text" 
                 id="subject" 
                 name="subject" 
                 required 
-                class="form-input"
+                class="modern-input"
                 placeholder="What's this about?"
               >
+              <label for="subject" class="input-label">Subject</label>
             </div>
-            <div>
-              <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+            
+            <div class="form-group">
               <textarea 
                 id="message" 
                 name="message" 
                 rows="5" 
                 required 
-                class="form-textarea"
+                class="modern-textarea"
                 placeholder="Tell me about your project or just say hello!"
               ></textarea>
+              <label for="message" class="input-label">Message</label>
             </div>
-            <div class="text-center">
-              <button type="submit" class="submit-btn">
-                <i class="fas fa-paper-plane mr-2"></i>
-                Send Message
+            
+            <div class="form-actions">
+              <button type="submit" class="modern-submit-btn">
+                <span class="btn-text">Send Message</span>
+                <i class="fas fa-paper-plane btn-icon"></i>
               </button>
             </div>
           </form>
         </div>
-      </div>
-      
-      <div class="flex justify-center space-x-6">
-        <a href="https://github.com/mazenMoazzam" class="social-link">
-          <i class="fab fa-github text-2xl"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/mazen-moazzam-7ab28626a/" class="social-link">
-          <i class="fab fa-linkedin text-2xl"></i>
-        </a>
-        <a href="#" class="social-link">
-          <i class="fab fa-twitter text-2xl"></i>
-        </a>
+        
+        <div class="social-links">
+          <a href="https://github.com/mazenMoazzam" class="social-link">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/mazen-moazzam-7ab28626a/" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
       </div>
     </div>
   </section>
