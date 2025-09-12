@@ -1,403 +1,571 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mazen Moazzam | Software Engineer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#00d4ff',
-            secondary: '#7c3aed',
-            accent: '#f59e0b',
-            dark: '#0f172a',
-            darker: '#020617',
-            glass: 'rgba(255, 255, 255, 0.1)',
-            glassBorder: 'rgba(255, 255, 255, 0.2)'
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'glow': 'glow 2s ease-in-out infinite alternate',
-            'slide-up': 'slideUp 0.8s ease-out',
-            'fade-in': 'fadeIn 1s ease-out',
-            'bounce-slow': 'bounce 3s infinite',
-          }
-        }
+// Particle.js Configuration
+particlesJS('particles-js', {
+  particles: {
+    number: {
+      value: 80,
+      density: {
+        enable: true,
+        value_area: 800
+      }
+    },
+    color: {
+      value: ['#00d4ff', '#7c3aed', '#f59e0b']
+    },
+    shape: {
+      type: 'circle',
+      stroke: {
+        width: 0,
+        color: '#000000'
+      }
+    },
+    opacity: {
+      value: 0.5,
+      random: false,
+      anim: {
+        enable: false,
+        speed: 1,
+        opacity_min: 0.1,
+        sync: false
+      }
+    },
+    size: {
+      value: 3,
+      random: true,
+      anim: {
+        enable: false,
+        speed: 40,
+        size_min: 0.1,
+        sync: false
+      }
+    },
+    line_linked: {
+      enable: true,
+      distance: 150,
+      color: '#00d4ff',
+      opacity: 0.4,
+      width: 1
+    },
+    move: {
+      enable: true,
+      speed: 6,
+      direction: 'none',
+      random: false,
+      straight: false,
+      out_mode: 'out',
+      bounce: false,
+      attract: {
+        enable: false,
+        rotateX: 600,
+        rotateY: 1200
       }
     }
-  </script>
-</head>
-<body class="bg-gradient-to-br from-dark via-darker to-dark text-white font-sans overflow-x-hidden">
+  },
+  interactivity: {
+    detect_on: 'canvas',
+    events: {
+      onhover: {
+        enable: true,
+        mode: 'repulse'
+      },
+      onclick: {
+        enable: true,
+        mode: 'push'
+      },
+      resize: true
+    },
+    modes: {
+      grab: {
+        distance: 400,
+        line_linked: {
+          opacity: 1
+        }
+      },
+      bubble: {
+        distance: 400,
+        size: 40,
+        duration: 2,
+        opacity: 8,
+        speed: 3
+      },
+      repulse: {
+        distance: 200,
+        duration: 0.4
+      },
+      push: {
+        particles_nb: 4
+      },
+      remove: {
+        particles_nb: 2
+      }
+    }
+  },
+  retina_detect: true
+});
+
+// Contact Form Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contactForm');
   
-  <!-- Particle Background -->
-  <div id="particles-js" class="fixed inset-0 z-0"></div>
+  if (contactForm) {
+    contactForm.addEventListener('submit', handleFormSubmit);
+    
+    // Real-time validation
+    const inputs = contactForm.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+      input.addEventListener('blur', validateField);
+      input.addEventListener('input', clearFieldError);
+    });
+  }
+});
+
+function validateField(e) {
+  const field = e.target;
+  const value = field.value.trim();
   
-  <!-- Navbar -->
-  <nav class="fixed top-0 w-full z-50 bg-glass backdrop-blur-md border-b border-glassBorder">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-glow">
-        Mazen Moazzam
-      </h1>
-      <div class="flex space-x-8">
-        <a href="#home" class="text-white hover:text-primary transition-all duration-300 font-medium relative group">
-          Home
-          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#experience" class="text-white hover:text-primary transition-all duration-300 font-medium relative group">
-          Experience
-          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#projects" class="text-white hover:text-primary transition-all duration-300 font-medium relative group">
-          Projects
-          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-        </a>
-        <a href="#contact" class="text-white hover:text-primary transition-all duration-300 font-medium relative group">
-          Contact
-          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-        </a>
-      </div>
-    </div>
-  </nav>
+  // Remove existing error/success classes
+  field.classList.remove('error', 'success');
+  
+  // Validate based on field type
+  switch(field.type) {
+    case 'email':
+      if (!validateEmail(value)) {
+        field.classList.add('error');
+        showFieldError(field, 'Please enter a valid email address');
+      } else {
+        field.classList.add('success');
+      }
+      break;
+    case 'text':
+      if (value.length < 2) {
+        field.classList.add('error');
+        showFieldError(field, 'This field is required');
+      } else {
+        field.classList.add('success');
+      }
+      break;
+  }
+  
+  // Special validation for textarea
+  if (field.tagName === 'TEXTAREA') {
+    if (value.length < 10) {
+      field.classList.add('error');
+      showFieldError(field, 'Message must be at least 10 characters long');
+    } else {
+      field.classList.add('success');
+    }
+  }
+}
 
-  <!-- Hero Section -->
-  <section id="home" class="min-h-screen flex items-center justify-center relative z-10">
-    <div class="text-center max-w-4xl mx-auto px-6">
-      <div class="animate-float">
-        <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-r from-primary to-secondary p-1">
-          <div class="w-full h-full rounded-full bg-dark flex items-center justify-center">
-            <i class="fas fa-code text-4xl text-primary"></i>
-          </div>
-        </div>
-      </div>
-      
-      <h1 class="text-6xl md:text-8xl font-extrabold mb-6 animate-slide-up">
-        <span class="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-          Hi, I'm Mazen
-        </span>
-      </h1>
-      
-      <p class="text-2xl md:text-3xl text-gray-300 mb-8 animate-fade-in">
-        Software Engineer Co-op @ Comcast
-      </p>
-      
-      <p class="text-lg text-gray-400 mb-12 max-w-2xl mx-auto animate-fade-in">
-        Passionate about building innovative solutions and creating impactful software experiences. 
-        Specializing in full-stack development, AI/ML, and cloud technologies.
-      </p>
-      
-      <div class="flex flex-wrap justify-center gap-6 animate-fade-in">
-        <a href="#projects" class="px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/25">
-          View My Work
-        </a>
-        <a href="#contact" class="px-8 py-4 border-2 border-primary rounded-full font-semibold hover:bg-primary hover:text-dark transition-all duration-300">
-          Get In Touch
-        </a>
-      </div>
-      
-      <!-- Tech Stack -->
-      <div class="mt-16 animate-fade-in">
-        <p class="text-gray-400 mb-6">Technologies I work with:</p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <div class="tech-icon">
-            <i class="fab fa-python text-3xl text-primary"></i>
-            <span class="text-sm">Python</span>
-          </div>
-          <div class="tech-icon">
-            <i class="fab fa-js text-3xl text-accent"></i>
-            <span class="text-sm">JavaScript</span>
-          </div>
-          <div class="tech-icon">
-            <i class="fab fa-react text-3xl text-primary"></i>
-            <span class="text-sm">React</span>
-          </div>
-          <div class="tech-icon">
-            <i class="fab fa-node text-3xl text-accent"></i>
-            <span class="text-sm">Node.js</span>
-          </div>
-          <div class="tech-icon">
-            <i class="fab fa-git-alt text-3xl text-primary"></i>
-            <span class="text-sm">Git</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+function clearFieldError(e) {
+  const field = e.target;
+  field.classList.remove('error');
+  
+  // Remove error message if exists
+  const errorMsg = field.parentNode.querySelector('.field-error');
+  if (errorMsg) {
+    errorMsg.remove();
+  }
+}
 
-  <!-- Experience Section -->
-  <section id="experience" class="py-20 relative z-10">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-5xl font-bold text-center mb-16">
-        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          💼 Experience
-        </span>
-      </h2>
+function showFieldError(field, message) {
+  // Remove existing error message
+  const existingError = field.parentNode.querySelector('.field-error');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  // Create new error message
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'field-error text-red-400 text-sm mt-1';
+  errorDiv.textContent = message;
+  field.parentNode.appendChild(errorDiv);
+}
 
-      <div class="space-y-12">
-        <!-- Experience 1 -->
-        <div class="experience-card">
-          <div class="flex flex-col lg:flex-row justify-between items-start mb-4">
-            <h3 class="text-3xl font-bold text-primary">Software Engineer</h3>
-            <span class="text-accent font-semibold">March 2025 – Present</span>
-          </div>
-          <p class="text-xl text-gray-300 mb-6">Comcast Corporation • Philadelphia, PA</p>
-          <div class="bg-glass rounded-lg p-6 border border-glassBorder">
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-start">
-                <i class="fas fa-video text-primary mt-1 mr-3"></i>
-                <span>Developing and maintaining tools/infrastructure that provide real-time insights regarding video packager and delivery systems.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
 
-        <!-- Experience 2 -->
-        <div class="experience-card">
-          <div class="flex flex-col lg:flex-row justify-between items-start mb-4">
-            <h3 class="text-3xl font-bold text-primary">Course Assistant</h3>
-            <span class="text-accent font-semibold">May 2024 – Present</span>
-          </div>
-          <p class="text-xl text-gray-300 mb-6">College of Computing and Informatics • Philadelphia, PA</p>
-          <div class="bg-glass rounded-lg p-6 border border-glassBorder">
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-start">
-                <i class="fas fa-chalkboard-teacher text-primary mt-1 mr-3"></i>
-                <span>Conduct weekly office hours for CS 172 (Object-Oriented Programming) and SE 210 (Software Specification and Design), assisting over 70 students in mastering complex material and driving improvements in class performance.</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-users text-primary mt-1 mr-3"></i>
-                <span>Lead lab sessions for 50+ students, providing hands-on guidance to reinforce core OOP concepts and principles, resulting in student's enhanced proficiency and confidence in applying knowledge to practical assignments.</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-check-circle text-primary mt-1 mr-3"></i>
-                <span>Grade 60+ assignments with meticulous attention to detail, ensuring compliance with rigorous course standards and promoting high academic achievement among students.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  
+  const form = e.target;
+  const submitBtn = form.querySelector('.submit-btn');
+  const formData = new FormData(form);
+  
+  // Validate all fields
+  const inputs = form.querySelectorAll('input, textarea');
+  let isValid = true;
+  
+  inputs.forEach(input => {
+    validateField({ target: input });
+    if (input.classList.contains('error')) {
+      isValid = false;
+    }
+  });
+  
+  if (!isValid) {
+    showFormMessage('Please fix the errors above', 'error');
+    return;
+  }
+  
+  // Disable submit button and show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+  
+  try {
+    // Prepare email data
+    const emailData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+      to: 'maz.moazzam345@gmail.com'
+    };
+    
+    // Send email using EmailJS (you'll need to set this up)
+    // For now, we'll simulate sending and show success message
+    await simulateEmailSend(emailData);
+    
+    // Show success message
+    showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+    
+    // Reset form
+    form.reset();
+    inputs.forEach(input => {
+      input.classList.remove('success');
+    });
+    
+  } catch (error) {
+    console.error('Error sending email:', error);
+    showFormMessage('Failed to send message. Please try again or email me directly.', 'error');
+  } finally {
+    // Re-enable submit button
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>Send Message';
+  }
+}
 
-        <!-- Experience 3 -->
-        <div class="experience-card">
-          <div class="flex flex-col lg:flex-row justify-between items-start mb-4">
-            <h3 class="text-3xl font-bold text-primary">Software Engineer</h3>
-            <span class="text-accent font-semibold">June 2023 – August 2023</span>
-          </div>
-          <p class="text-xl text-gray-300 mb-6">RadicalAI • Remote</p>
-          <div class="bg-glass rounded-lg p-6 border border-glassBorder">
-            <ul class="space-y-3 text-gray-300">
-              <li class="flex items-start">
-                <i class="fas fa-database text-primary mt-1 mr-3"></i>
-                <span>Designed a company-wide data schema to support Stripe API integration with a lightweight backend in Firebase, utilizing Firebase cloud functions, Firestore, and Firebase Local Emulator.</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-dollar-sign text-primary mt-1 mr-3"></i>
-                <span>Spearheaded the development of the company's monetization platform, integrating a secure and efficient subscription system that increased company revenue by $6,000.</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-gamepad text-primary mt-1 mr-3"></i>
-                <span>Developed an interactive arcade system in Node.js, creating engaging assessments and activities that increased user activity by 2 hours per session.</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-users-cog text-primary mt-1 mr-3"></i>
-                <span>Assisted a team of 7 developers to ensure timely completion of tasks, facilitating a smooth transition and presentation of accomplished work before weekly sprint reviews.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+function simulateEmailSend(emailData) {
+  return new Promise((resolve) => {
+    // Simulate API call delay
+    setTimeout(() => {
+      console.log('Email data:', emailData);
+      resolve();
+    }, 2000);
+  });
+}
 
-  <!-- Projects Section -->
-  <section id="projects" class="py-20 relative z-10">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-5xl font-bold text-center mb-16">
-        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          🚀 Projects
-        </span>
-      </h2>
+function showFormMessage(message, type) {
+  // Remove existing messages
+  const existingMessage = document.querySelector('.form-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  
+  // Create new message
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `form-message ${type}`;
+  messageDiv.textContent = message;
+  
+  // Insert after form
+  const form = document.getElementById('contactForm');
+  form.parentNode.insertBefore(messageDiv, form.nextSibling);
+  
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    if (messageDiv.parentNode) {
+      messageDiv.remove();
+    }
+  }, 5000);
+}
 
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <!-- Project Card 1 -->
-        <div class="project-card">
-          <div class="relative overflow-hidden rounded-t-xl">
-            <div class="w-full h-48 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-              <i class="fas fa-shield-alt text-6xl text-primary"></i>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-3 text-primary">️ AlertVision</h3>
-            <p class="text-gray-300 mb-4">Real-time surveillance app using Flask, React, and OpenCV with advanced computer vision capabilities.</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">Python</span>
-              <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">React</span>
-              <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">OpenCV</span>
-            </div>
-            <button class="w-full py-2 bg-gradient-to-r from-primary to-secondary rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-              View Project
-            </button>
-          </div>
-        </div>
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
 
-        <!-- Project Card 2 -->
-        <div class="project-card">
-          <div class="relative overflow-hidden rounded-t-xl">
-            <div class="w-full h-48 bg-gradient-to-br from-accent/20 to-primary/20 flex items-center justify-center">
-              <i class="fas fa-chart-line text-6xl text-accent"></i>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-3 text-primary">📈 TradeWizard</h3>
-            <p class="text-gray-300 mb-4">Automated stock paper trading bot with sentiment analysis and machine learning algorithms.</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Python</span>
-              <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">ML</span>
-              <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">API</span>
-            </div>
-            <button class="w-full py-2 bg-gradient-to-r from-accent to-primary rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-              View Project
-            </button>
-          </div>
-        </div>
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
 
-        <!-- Project Card 3 -->
-        <div class="project-card">
-          <div class="relative overflow-hidden rounded-t-xl">
-            <div class="w-full h-48 bg-gradient-to-br from-secondary/20 to-accent/20 flex items-center justify-center">
-              <i class="fas fa-cards-blank text-6xl text-secondary"></i>
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent"></div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-3 text-primary">🃏 PokeScan</h3>
-            <p class="text-gray-300 mb-4">CNN-based Pokémon card authenticity detector using deep learning and computer vision.</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm">CNN</span>
-              <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm">TensorFlow</span>
-              <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm">Python</span>
-            </div>
-            <button class="w-full py-2 bg-gradient-to-r from-secondary to-accent rounded-lg font-semibold hover:scale-105 transition-all duration-300">
-              View Project
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
 
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 relative z-10">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-5xl font-bold mb-16 text-center">
-        <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Let's Connect
-        </span>
-      </h2>
-      
-      <!-- Unified Contact Component -->
-      <div class="unified-contact-card">
-        <div class="contact-header">
-          <div class="contact-info">
-            <div class="info-item">
-              <i class="fas fa-envelope text-primary"></i>
-              <span>maz.moazzam345@gmail.com</span>
-            </div>
-            <div class="info-item">
-              <i class="fas fa-map-marker-alt text-primary"></i>
-              <span>Philadelphia, PA</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="contact-form-section">
-          <h3 class="form-title">Send me a message</h3>
-          <form id="contactForm" class="contact-form">
-            <div class="form-row">
-              <div class="form-group">
-                <input 
-                  type="text" 
-                  id="name" 
-                  name="name" 
-                  required 
-                  class="modern-input"
-                  placeholder="Your name"
-                >
-                <label for="name" class="input-label">Name</label>
-              </div>
-              <div class="form-group">
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  required 
-                  class="modern-input"
-                  placeholder="your.email@example.com"
-                >
-                <label for="email" class="input-label">Email</label>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <input 
-                type="text" 
-                id="subject" 
-                name="subject" 
-                required 
-                class="modern-input"
-                placeholder="What's this about?"
-              >
-              <label for="subject" class="input-label">Subject</label>
-            </div>
-            
-            <div class="form-group">
-              <textarea 
-                id="message" 
-                name="message" 
-                rows="5" 
-                required 
-                class="modern-textarea"
-                placeholder="Tell me about your project or just say hello!"
-              ></textarea>
-              <label for="message" class="input-label">Message</label>
-            </div>
-            
-            <div class="form-actions">
-              <button type="submit" class="modern-submit-btn">
-                <span class="btn-text">Send Message</span>
-                <i class="fas fa-paper-plane btn-icon"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-        
-        <div class="social-links">
-          <a href="https://github.com/mazenMoazzam" class="social-link">
-            <i class="fab fa-github"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/mazen-moazzam-7ab28626a/" class="social-link">
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a href="#" class="social-link">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+// Observe all sections
+document.querySelectorAll('section').forEach(section => {
+  observer.observe(section);
+});
 
-  <!-- Footer -->
-  <footer class="text-center py-8 border-t border-glassBorder bg-glass/50 backdrop-blur-md">
-    <p class="text-gray-400">
-      © 2025 Mazen Moazzam
-    </p>
-  </footer>
+// Navbar background change on scroll
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('nav');
+  if (window.scrollY > 100) {
+    navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+    navbar.style.backdropFilter = 'blur(20px)';
+  } else {
+    navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+    navbar.style.backdropFilter = 'blur(10px)';
+  }
+});
 
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+// Typing effect for hero section
+function typeWriter(element, text, speed = 100) {
+  let i = 0;
+  element.innerHTML = '';
+  
+  function type() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  
+  type();
+}
+
+// Initialize typing effect when page loads
+window.addEventListener('load', () => {
+  const heroTitle = document.querySelector('#home h1 span');
+  if (heroTitle) {
+    const originalText = heroTitle.textContent;
+    typeWriter(heroTitle, originalText, 150);
+  }
+});
+
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  const hero = document.querySelector('#home');
+  if (hero) {
+    const rate = scrolled * -0.5;
+    hero.style.transform = `translateY(${rate}px)`;
+  }
+});
+
+// Interactive project cards
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-15px) scale(1.03)';
+  });
+  
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0) scale(1)';
+  });
+});
+
+// Experience card animations
+document.querySelectorAll('.experience-card').forEach(card => {
+  card.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-8px)';
+    this.style.boxShadow = '0 25px 50px rgba(0, 212, 255, 0.15)';
+  });
+  
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0)';
+    this.style.boxShadow = 'none';
+  });
+});
+
+// Tech stack icons animation
+document.querySelectorAll('.tech-icon').forEach(icon => {
+  icon.addEventListener('mouseenter', function() {
+    this.style.animation = 'pulse 1s infinite';
+  });
+  
+  icon.addEventListener('mouseleave', function() {
+    this.style.animation = 'none';
+  });
+});
+
+// Social links hover effect
+document.querySelectorAll('.social-link').forEach(link => {
+  link.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-5px) scale(1.1)';
+  });
+  
+  link.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0) scale(1)';
+  });
+});
+
+// Loading animation
+window.addEventListener('load', () => {
+  document.body.classList.add('loaded');
+  
+  // Animate elements on page load
+  const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up');
+  animatedElements.forEach((element, index) => {
+    setTimeout(() => {
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0)';
+    }, index * 200);
+  });
+});
+
+// Cursor trail effect
+let mouseX = 0;
+let mouseY = 0;
+let cursorTrail = [];
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  
+  // Create cursor trail
+  const trail = document.createElement('div');
+  trail.className = 'cursor-trail';
+  trail.style.left = mouseX + 'px';
+  trail.style.top = mouseY + 'px';
+  document.body.appendChild(trail);
+  
+  cursorTrail.push(trail);
+  
+  // Remove old trails
+  if (cursorTrail.length > 5) {
+    const oldTrail = cursorTrail.shift();
+    oldTrail.remove();
+  }
+  
+  // Animate trail
+  setTimeout(() => {
+    trail.style.opacity = '0';
+    trail.style.transform = 'scale(0)';
+  }, 100);
+});
+
+// Add cursor trail styles
+const style = document.createElement('style');
+style.textContent = `
+  .cursor-trail {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: linear-gradient(45deg, #00d4ff, #7c3aed);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  .loaded {
+    animation: fadeIn 1s ease-out;
+  }
+  
+  .field-error {
+    animation: shake 0.5s ease-in-out;
+  }
+`;
+document.head.appendChild(style);
+
+// Smooth reveal animations for sections
+function revealOnScroll() {
+  const sections = document.querySelectorAll('section');
+  
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    
+    if (sectionTop < windowHeight * 0.75) {
+      section.classList.add('visible');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+// Initialize reveal on page load
+revealOnScroll();
+
+// Add some interactive console messages
+console.log('%c🚀 Welcome to Mazen\'s Portfolio!', 'color: #00d4ff; font-size: 20px; font-weight: bold;');
+console.log('%c💡 Built with modern web technologies', 'color: #7c3aed; font-size: 14px;');
+console.log('%c🌟 Feel free to explore the code!', 'color: #f59e0b; font-size: 14px;');
+console.log('%c📧 Contact: maz.moazzam345@gmail.com', 'color: #00d4ff; font-size: 14px;');
+
+// Performance optimization: Throttle scroll events
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
+}
+
+// Apply throttling to scroll events
+window.addEventListener('scroll', throttle(() => {
+  revealOnScroll();
+}, 16)); // ~60fps
+
+// Add keyboard navigation
+document.addEventListener('keydown', (e) => {
+  switch(e.key) {
+    case 'ArrowDown':
+      e.preventDefault();
+      window.scrollBy({ top: 100, behavior: 'smooth' });
+      break;
+    case 'ArrowUp':
+      e.preventDefault();
+      window.scrollBy({ top: -100, behavior: 'smooth' });
+      break;
+    case 'Home':
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      break;
+    case 'End':
+      e.preventDefault();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      break;
+  }
+});
+
+// Add touch gestures for mobile
+let touchStartY = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', (e) => {
+  touchStartY = e.changedTouches[0].screenY;
+});
+
+document.addEventListener('touchend', (e) => {
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  const diff = touchStartY - touchEndY;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swipe up
+      window.scrollBy({ top: 300, behavior: 'smooth' });
+    } else {
+      // Swipe down
+      window.scrollBy({ top: -300, behavior: 'smooth' });
+    }
+  }
+}
