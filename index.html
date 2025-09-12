@@ -304,115 +304,82 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Updated Contact Section -->
   <section id="contact" class="py-20 relative z-10">
-    <div class="max-w-4xl mx-auto px-6">
+    <div class="max-w-5xl mx-auto px-6">
       <h2 class="text-5xl font-bold mb-16 text-center">
         <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
           Let's Connect
         </span>
       </h2>
-      
-      <!-- Beautiful Unified Contact Box -->
-      <div class="contact-unified-box">
-        <!-- Contact Info Header -->
-        <div class="contact-info-header">
-          <div class="contact-details">
-            <div class="contact-item">
-              <div class="contact-icon">
-                <i class="fas fa-envelope"></i>
-              </div>
-              <div class="contact-text">
-                <span class="contact-label">Email</span>
-                <span class="contact-value">maz.moazzam345@gmail.com</span>
-              </div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-              <div class="contact-text">
-                <span class="contact-label">Location</span>
-                <span class="contact-value">Philadelphia, PA</span>
-              </div>
-            </div>
-          </div>
+
+      <!-- New Contact Component -->
+      <div class="bg-glass rounded-2xl p-8 shadow-lg border border-glassBorder">
+        <div class="text-center mb-8">
+          <h3 class="text-3xl font-semibold text-primary mb-2">Contact Me</h3>
+          <p class="text-gray-300">Feel free to reach out to me via email or send a message directly below.</p>
         </div>
-        
-        <!-- Contact Form -->
-        <div class="contact-form-container">
-          <h3 class="form-heading">Send me a message</h3>
-          <form id="contactForm" class="contact-form">
-            <div class="form-grid">
-              <div class="form-field">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Contact Info -->
+          <div class="flex flex-col items-center">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                <i class="fas fa-envelope text-white text-xl"></i>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Email</p>
+                <p class="text-white font-medium">maz.moazzam345@gmail.com</p>
+              </div>
+            </div>
+            <a href="mailto:maz.moazzam345@gmail.com" class="px-6 py-3 bg-primary text-dark rounded-full font-semibold hover:scale-105 transition-all duration-300">
+              Send Email
+            </a>
+          </div>
+
+          <!-- Contact Form -->
+          <div>
+            <form id="contactForm" class="space-y-6">
+              <div>
+                <label for="name" class="block text-gray-400 mb-2">Name</label>
                 <input 
                   type="text" 
                   id="name" 
                   name="name" 
                   required 
-                  class="form-input"
-                  placeholder=" "
+                  class="w-full px-4 py-3 bg-dark border border-glassBorder rounded-lg text-white focus:ring-2 focus:ring-primary focus:outline-none"
+                  placeholder="Your Name"
                 >
-                <label for="name" class="form-label">Name</label>
               </div>
-              <div class="form-field">
+
+              <div>
+                <label for="email" class="block text-gray-400 mb-2">Email</label>
                 <input 
                   type="email" 
                   id="email" 
                   name="email" 
                   required 
-                  class="form-input"
-                  placeholder=" "
+                  class="w-full px-4 py-3 bg-dark border border-glassBorder rounded-lg text-white focus:ring-2 focus:ring-primary focus:outline-none"
+                  placeholder="Your Email"
                 >
-                <label for="email" class="form-label">Email</label>
               </div>
-            </div>
-            
-            <div class="form-field">
-              <input 
-                type="text" 
-                id="subject" 
-                name="subject" 
-                required 
-                class="form-input"
-                placeholder=" "
-              >
-              <label for="subject" class="form-label">Subject</label>
-            </div>
-            
-            <div class="form-field">
-              <textarea 
-                id="message" 
-                name="message" 
-                rows="4" 
-                required 
-                class="form-textarea"
-                placeholder=" "
-              ></textarea>
-              <label for="message" class="form-label">Message</label>
-            </div>
-            
-            <div class="form-submit">
-              <button type="submit" class="submit-button">
-                <span>Send Message</span>
-                <i class="fas fa-paper-plane"></i>
+
+              <div>
+                <label for="message" class="block text-gray-400 mb-2">Message</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="4" 
+                  required 
+                  class="w-full px-4 py-3 bg-dark border border-glassBorder rounded-lg text-white focus:ring-2 focus:ring-primary focus:outline-none"
+                  placeholder="Your Message"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-3 bg-gradient-to-r from-primary to-secondary text-dark rounded-lg font-semibold hover:scale-105 transition-all duration-300">
+                Send Message
               </button>
-            </div>
-          </form>
-        </div>
-        
-        <!-- Social Links -->
-        <div class="social-section">
-          <div class="social-links">
-            <a href="https://github.com/mazenMoazzam" class="social-link">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/mazen-moazzam-7ab28626a/" class="social-link">
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="#" class="social-link">
-              <i class="fab fa-twitter"></i>
-            </a>
+            </form>
           </div>
         </div>
       </div>
