@@ -1,6 +1,6 @@
 # Mazen Moazzam — Personal Website
 
-Welcome to my personal website! I am a Software Engineer at JPMorgan Chase & Co. and a Software Engineering student at Drexel University (GPA: 3.73, Expected Graduation: June 2027). I build cloud-native platforms, distributed systems, and ML-powered applications.
+Welcome to my personal website! I am a Software Engineer at JPMorgan Chase & Co. and a Software Engineering student at Drexel University (Expected Graduation: June 2027). I build cloud-native platforms, distributed systems, and ML-powered applications.
 
 ## Experience
 - **JPMorgan Chase & Co.** — Software Engineer (June 2026 – Present)
