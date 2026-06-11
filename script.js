@@ -1,3 +1,16 @@
+// ─── EmailJS ──────────────────────────────────────────────────────────────────
+// 1. Sign up at https://www.emailjs.com (free tier is fine)
+// 2. Add a Gmail (or other) email service → copy the Service ID below
+// 3. Create an email template with variables: {{from_name}}, {{from_email}}, {{message}}
+//    → copy the Template ID below
+// 4. Go to Account → API Keys → copy your Public Key below
+const EMAILJS_SERVICE_ID  = 'service_o9lyjhs';
+const EMAILJS_TEMPLATE_ID = 'template_9ohfx9k';
+const EMAILJS_PUBLIC_KEY  = 'MkamGYH2nh53SuUo6';
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
+// ──────────────────────────────────────────────────────────────────────────────
+
 particlesJS('particles-js', {
   particles: {
     number: {
@@ -230,11 +243,12 @@ async function handleFormSubmit(e) {
 }
 
 function simulateEmailSend(emailData) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('Email data:', emailData);
-      resolve();
-    }, 2000);
+  // Real EmailJS send — replace the three constants at the top of this file first
+  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    from_name:  emailData.name,
+    from_email: emailData.email,
+    message:    emailData.message,
+    to_email:   'maz.moazzam345@gmail.com',
   });
 }
 
